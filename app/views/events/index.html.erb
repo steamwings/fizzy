@@ -18,6 +18,14 @@
 <% end %>
 
 <div id="activity">
+  <div class="center flex-inline margin-block">
+    <select class="input center input-select">
+      <option value="today">All Projects</option>
+      <% Bucket.all.each do |bucket| %>
+        <option value="<%= bucket.id %>"><%= bucket.name %></option>
+      <% end %>
+    </select>
+  </div>
   <%= render "events/day", activity_day: @activity_day, next_day: @next_day, events: @events %>
 </div>
 
