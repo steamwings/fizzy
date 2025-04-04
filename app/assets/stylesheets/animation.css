@@ -1,64 +1,65 @@
-/* Animation classes */
-.shake {
-  animation: shake 400ms both;
-}
+@layer utilities {
+  .shake {
+    animation: shake 400ms both;
+  }
 
-@keyframes appear-then-fade {
-  0%,100% { opacity: 0; }
-  5%,60%  { opacity: 1; }
-}
+  @keyframes appear-then-fade {
+    0%,100% { opacity: 0; }
+    5%,60%  { opacity: 1; }
+  }
 
-/* Keyframes */
-@keyframes float-up-left {
-  0% { transform: translate(10px, 20px); }
-  100% { transform: translate(0, 0); }
-}
+  /* Keyframes */
+  @keyframes float-up-left {
+    0% { transform: translate(10px, 20px); }
+    100% { transform: translate(0, 0); }
+  }
 
-@keyframes float-down-right {
-  0% { transform: translate(-10px, -20px); }
-  100% { transform: translate(0, 0); }
-}
+  @keyframes float-down-right {
+    0% { transform: translate(-10px, -20px); }
+    100% { transform: translate(0, 0); }
+  }
 
-@keyframes react {
-  0%   { transform: scale(0.3);  opacity: 0; }
-  50%  { transform: scale(1.15); opacity: 1; }
-  100% { transform: scale(1); }
-}
+  @keyframes react {
+    0%   { transform: scale(0.3);  opacity: 0; }
+    50%  { transform: scale(1.15); opacity: 1; }
+    100% { transform: scale(1); }
+  }
 
-@keyframes scale-fade-out {
-  0%   { transform: scale(1); opacity: 1; }
-  100% { transform: scale(0); opacity: 0; }
-}
+  @keyframes scale-fade-out {
+    0%   { transform: scale(1); opacity: 1; }
+    100% { transform: scale(0); opacity: 0; }
+  }
 
-@keyframes shake {
-  0%  { transform: translateX(-2rem); }
-  25% { transform: translateX(2rem); }
-  50% { transform: translateX(-1rem); }
-  75% { transform: translateX(1rem); }
-}
+  @keyframes shake {
+    0%  { transform: translateX(-2rem); }
+    25% { transform: translateX(2rem); }
+    50% { transform: translateX(-1rem); }
+    75% { transform: translateX(1rem); }
+  }
 
-@keyframes wobble {
-  0%  { transform: rotate(calc(var(--bubble-rotate) + 90deg)); }
-  15% { border-radius: 66% 34% 72% 28% / 39% 63% 37% 61%; }
-  25% { border-radius: 55% 47% 62% 40% / 58% 50% 52% 44%; }
-  33% { border-radius: 46% 54% 61% 39% / 50% 51% 49% 50%; }
-  50% { border-radius: 54% 46% 61% 39% / 57% 49% 51% 43%; }
-  75% { border-radius: 53% 45% 60% 38% / 56% 48% 50% 42%; }
-}
+  @keyframes wobble {
+    0%  { transform: rotate(calc(var(--bubble-rotate) + 90deg)); }
+    15% { border-radius: 66% 34% 72% 28% / 39% 63% 37% 61%; }
+    25% { border-radius: 55% 47% 62% 40% / 58% 50% 52% 44%; }
+    33% { border-radius: 46% 54% 61% 39% / 50% 51% 49% 50%; }
+    50% { border-radius: 54% 46% 61% 39% / 57% 49% 51% 43%; }
+    75% { border-radius: 53% 45% 60% 38% / 56% 48% 50% 42%; }
+  }
 
-@keyframes wobble-alt {
-  0%  { transform: rotate(calc(var(--bubble-rotate) + -90deg)); }
-  12% { border-radius: 66% 34% 72% 28% / 39% 63% 37% 61%; }
-  25% { border-radius: 53% 45% 60% 38% / 56% 48% 50% 42%; }
-  33% { border-radius: 55% 47% 62% 40% / 58% 50% 52% 44%; }
-  50% { border-radius: 46% 54% 61% 39% / 50% 51% 49% 50%; }
-  75% { border-radius: 54% 46% 61% 39% / 57% 49% 51% 43%; }
-}
+  @keyframes wobble-alt {
+    0%  { transform: rotate(calc(var(--bubble-rotate) + -90deg)); }
+    12% { border-radius: 66% 34% 72% 28% / 39% 63% 37% 61%; }
+    25% { border-radius: 53% 45% 60% 38% / 56% 48% 50% 42%; }
+    33% { border-radius: 55% 47% 62% 40% / 58% 50% 52% 44%; }
+    50% { border-radius: 46% 54% 61% 39% / 50% 51% 49% 50%; }
+    75% { border-radius: 54% 46% 61% 39% / 57% 49% 51% 43%; }
+  }
 
-@keyframes wobble-img {
-  15% { border-radius: 66% 34% 72% 28% / 39% 63% 37% 61%; }
-  25% { border-radius: 55% 47% 62% 40% / 58% 50% 52% 44%; }
-  33% { border-radius: 46% 54% 61% 39% / 50% 51% 49% 50%; }
-  50% { border-radius: 54% 46% 61% 39% / 57% 49% 51% 43%; }
-  75% { border-radius: 53% 45% 60% 38% / 56% 48% 50% 42%; }
+  @keyframes wobble-img {
+    15% { border-radius: 66% 34% 72% 28% / 39% 63% 37% 61%; }
+    25% { border-radius: 55% 47% 62% 40% / 58% 50% 52% 44%; }
+    33% { border-radius: 46% 54% 61% 39% / 50% 51% 49% 50%; }
+    50% { border-radius: 54% 46% 61% 39% / 57% 49% 51% 43%; }
+    75% { border-radius: 53% 45% 60% 38% / 56% 48% 50% 42%; }
+  }
 }
