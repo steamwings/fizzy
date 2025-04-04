@@ -1,6 +1,7 @@
 <nav class="align-start">
   <%= link_to_home %>
 
+  <div class="btn btn--placeholder"></div>
   <div class="btn btn--placeholder flex-item-justify-start"></div>
 
   <header class="flex flex-inline flex-column center flex-shrink">
@@ -22,7 +23,11 @@
   </header>
 
   <% if bucket = filter.single_bucket %>
-    <%= link_to edit_bucket_path(bucket), class: "btn flex-item-justify-end" do %>
+    <div class="flex-item-justify-end">
+      <%= access_involvement_advance_button bucket, Current.user %>
+    </div>
+
+    <%= link_to edit_bucket_path(bucket), class: "btn" do %>
       <%= icon_tag "settings" %>
       <span class="for-screen-reader">Settings for <%= bucket.name %></span>
     <% end %>
