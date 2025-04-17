@@ -5,6 +5,9 @@ servers:
   jobs:
     hosts:
       - fizzy-app-101
+  web-replica:
+    hosts:
+      - fizzy-app-102
 
 proxy:
   hosts:
