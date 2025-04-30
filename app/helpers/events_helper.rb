@@ -86,7 +86,7 @@ module EventsHelper
       "#{event_creator_name(event)} changed the date to #{event.particulars.dig('particulars', 'due_date').to_date.strftime('%B %-d')} on <span style='color: var(--card-color)'>#{ title }</span>".html_safe
     when "card_due_date_removed"
       "#{event_creator_name(event)} removed the date on <span style='color: var(--card-color)'>#{ title }</span>"
-    when "card_card_title_changed"
+    when "card_title_changed"
       "#{event_creator_name(event)} renamed <span style='color: var(--card-color)'>#{ title }</span> (was: '#{event.particulars.dig('particulars', 'old_title')})'".html_safe
     end
   end
@@ -101,7 +101,7 @@ module EventsHelper
       "bolt"
     when "comment_created"
       "comment"
-    when "card_card_title_changed"
+    when "card_title_changed"
       "rename"
     else
       "person"
