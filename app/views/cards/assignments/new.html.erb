@@ -1,20 +1,22 @@
 <%= turbo_frame_tag @card, :assignment do %>
-  <%= tag.div class: "max-width",data: {
-        controller: "filter", 
+  <%= tag.div class: "max-width", data: {
+				action: "turbo:before-cache@document->dialog#close keydown->navigable-list#navigate filter:changed->navigable-list#reset",
+				controller: "filter navigable-list",
 				dialog_target: "dialog",
-				filter_active_class: "filter--active", 
-				filter_selected_class: "selected"} do %>
+				navigable_list_focus_on_selection_value: false,
+				navigable_list_actionable_items_value: true } do %>
     <strong class="popup__title pad-inline-half txt-nowrap">Assign this to…</strong>
 
     <% if @collection.users.active.count > 1 %>
-      <input placeholder="Find someone…" class="input input--transparent txt-small margin-block-half" type="search" autocorrect="off" autocomplete="off" data-1p-ignore="true" data-action="input->filter#filter" autofocus>
+			<%= text_field_tag :search, nil, placeholder: "Find someone…", class: "input input--transparent txt-small", autofocus: true,
+						type: "search", autocorrect: "off", autocomplete: "off", data: { "1p-ignore": "true", filter_target: "input", action: "input->filter#filter" } %>
     <% end %>
 
     <menu class="flex flex-column full-width popup__list margin-none unpad max-width" data-filter-target="list">
       <% @collection.users.active.alphabetically.each do |user| %>
-        <li class="popup__group flex align-center full-width" data-value="<%= user.name.downcase %>">
-          <%= button_to card_assignments_path(@card, params: { assignee_id: user.id }), method: :post, 
-              class: "btn popup__item min-width flex-item-grow full-width unpad-inline", 
+        <li class="popup__group flex align-center full-width" data-value="<%= user.name.downcase %>" data-filter-target="item" data-navigable-list-target="item">
+          <%= button_to card_assignments_path(@card, params: { assignee_id: user.id }), method: :post,
+              class: "btn popup__item min-width flex-item-grow full-width unpad-inline",
               form_class: "max-width flex-item-grow" do %>
             <span class="overflow-ellipsis flex-item-grow"><%= user.name %></span>
             <%= icon_tag "check", size: 18, class: "checked flex-item-no-shrink flex-item-justify-end", style: "--icon-size: 1em" if @card.assignees.include?(user) %>
