@@ -38,11 +38,11 @@ class Card::ActivitySpike::Detector
     end
 
     def minimum_participants
-      3
+      2
     end
 
     def minimum_comments
-      2
+      3
     end
 
     def card_was_just_assigned?
