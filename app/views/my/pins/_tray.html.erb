@@ -6,13 +6,10 @@
     <%= turbo_frame_tag "pins", src: my_pins_path %>
   <% end %>
 
-  <div class="tray__actions">
-    <button class="txt-uppercase btn btn--reversed borderless fill-transparent txt-x-small translucent center full-width" data-action="click->dialog#close">
-      Pinned
-    </button>
-  </div>
-
-  <button class="tray__toggle" data-action="dialog#toggle" aria-label="Expand pins stack" aria-haspopup="true">
-    <%= icon_tag "pinned" %>
+  <button class="tray__toggle" data-action="dialog#toggle" aria-label="Toggle pins stack" aria-haspopup="true">
+    <div class="tray__toggle-btn txt-uppercase btn btn--reversed txt-x-small center full-width">
+      <%= icon_tag "pinned" %>
+      <span class="tray__toggle-text">Pinned</span>
+    </div>
   </button>
 </section>
