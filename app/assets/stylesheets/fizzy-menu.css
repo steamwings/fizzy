@@ -64,6 +64,12 @@
         inset: 0.66em 0.33em auto auto;
         opacity: 0.5;
         position: absolute;
+
+        @media (any-hover: none) {
+          /* This is a reasonable way to assert touch devices. any-pointer would seem */
+          /* to be a better fit but it is incorrectly reported on many devices */
+          display: none;
+        }
       }
 
       .icon {
