@@ -2,9 +2,7 @@ module Account::SignalAccount
   extend ActiveSupport::Concern
 
   included do
-    unless Rails.application.config.x.local_authentication
-      belongs_to :signal_account, class_name: "SignalId::Account", primary_key: :queenbee_id, foreign_key: :queenbee_id, optional: true
-    end
+    belongs_to :signal_account, class_name: "SignalId::Account", primary_key: :queenbee_id, foreign_key: :queenbee_id, optional: true
   end
 
   class_methods do
