@@ -25,7 +25,7 @@ class Conversation::Message::ResponseGenerator
     - Respond in **Markdown**
     - Always include links to relevant cards, collections, comments, or users
 
-    Remember, you're here to help — not to anticipate.
+    You're here to help — not to anticipate.
   PROMPT
 
   attr_reader :message, :prompt, :llm_model
@@ -62,11 +62,10 @@ class Conversation::Message::ResponseGenerator
 
     def llm
       RubyLLM.chat(model: llm_model).tap do |chat|
-        chat.with_tool(Ai::Tool::ListCards.new)
-        chat.with_tool(Ai::Tool::ListCollections.new)
-        chat.with_tool(Ai::Tool::ListComments.new)
-        chat.with_tool(Ai::Tool::ListStatusChanges.new)
-        chat.with_tool(Ai::Tool::ListUsers.new)
+        chat.with_tool(Ai::Tool::ListCards.new(user: message.owner))
+        chat.with_tool(Ai::Tool::ListCollections.new(user: message.owner))
+        chat.with_tool(Ai::Tool::ListComments.new(user: message.owner))
+        chat.with_tool(Ai::Tool::ListUsers.new(user: message.owner))
 
         chat.reset_messages!
 

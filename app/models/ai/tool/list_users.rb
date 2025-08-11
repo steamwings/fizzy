@@ -5,7 +5,7 @@ class Ai::Tool::ListUsers < Ai::Tool
     Responses are JSON objects that look like this:
     ```
     {
-      "collections": [
+      "users": [
         { "id": 3, "name": "John Doe" },
         { "id": 4, "name": "Johanna Doe" }
       ],
@@ -14,9 +14,11 @@ class Ai::Tool::ListUsers < Ai::Tool
       }
     }
     ```
-    Each collection object has the following fields:
+    Each user object has the following fields:
     - id [Integer, not null]
     - name [String, not null]
+    - role [String, not null]
+    - url [String, not null]
   MD
 
   param :page,
@@ -27,6 +29,12 @@ class Ai::Tool::ListUsers < Ai::Tool
     type: :string,
     desc: "If provided, will return only the users with the given IDs (comma-separated)",
     required: false
+
+  attr_reader :user
+
+  def initialize(user:)
+    @user = user
+  end
 
   def execute(**params)
     scope = User.all
@@ -39,11 +47,12 @@ class Ai::Tool::ListUsers < Ai::Tool
     ).page(params[:page])
 
     {
-      collections: page.records.map do |user|
+      users: page.records.map do |user|
         {
           id: user.id,
           name: user.name,
-          url: user_path(user)
+          role: user.role,
+          url: user_url(user)
         }
       end,
       pagination: {

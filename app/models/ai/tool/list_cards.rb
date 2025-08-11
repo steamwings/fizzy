@@ -15,7 +15,7 @@ class Ai::Tool::ListCards < Ai::Tool
       }
     }
     ```
-    Each collection object has the following fields:
+    Each card object has the following fields:
     - id [Integer, not null]
     - title [String, not null] - The title of the card
     - status [String, not null] - Enum of "creating", "draft" and "published"
@@ -69,8 +69,14 @@ class Ai::Tool::ListCards < Ai::Tool
     desc: "If provided, will return only card that were last active on or before the given ISO timestamp",
     required: false
 
+  attr_reader :user
+
+  def initialize(user:)
+    @user = user
+  end
+
   def execute(**params)
-    cards = Card.all.includes(:stage, :creator, :assignees, :goldness)
+    cards = Card.where(collection: user.collections).includes(:stage, :creator, :assignees, :goldness)
 
     cards = cards.search(params[:query]) if params[:query].present?
     cards = cards.golden if params[:golden].present?
@@ -99,6 +105,12 @@ class Ai::Tool::ListCards < Ai::Tool
 
     page = GearedPagination::Recordset.new(cards, ordered_by: { id: :desc }).page(params[:page])
 
+    puts "="*80
+    puts "Account: #{Account.sole.id}"
+    puts "Tenant: #{ApplicationRecord.current_tenant}"
+    puts "URL options: #{default_url_options.inspect}"
+    puts "="*80
+
     {
       cards: page.records.map do |card|
         {
@@ -112,7 +124,7 @@ class Ai::Tool::ListCards < Ai::Tool
           creator: card.creator.as_json(only: [ :id, :name ]),
           assignees: card.assignees.as_json(only: [ :id, :name ]),
           description: card.description.to_plain_text.truncate(1000),
-          url: collection_card_path(card.collection, card)
+          url: collection_card_url(card.collection, card)
         }
       end,
       pagination: {

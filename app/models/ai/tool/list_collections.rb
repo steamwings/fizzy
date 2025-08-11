@@ -24,8 +24,14 @@ class Ai::Tool::ListCollections < Ai::Tool
     desc: "Which page to return. Leave balnk to get the first page",
     required: false
 
+  attr_reader :user
+
+  def initialize(user:)
+    @user = user
+  end
+
   def execute(**params)
-    scope = Collection.all
+    scope = user.collections
 
     page = GearedPagination::Recordset.new(
       scope,
@@ -37,7 +43,7 @@ class Ai::Tool::ListCollections < Ai::Tool
         {
           id: collection.id,
           name: collection.name,
-          url: collection_path(collection)
+          url: collection_url(collection)
         }
       end,
       pagination: {
