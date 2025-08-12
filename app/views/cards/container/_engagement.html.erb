@@ -2,14 +2,23 @@
   <div class="card-perma__notch card-perma__notch--top" id="<%= dom_id(@card, :card_engagement_toggle) %>" style="--card-color: <%= @card.color %>;">
     <div class="btn__group flex full-width txt-uppercase">
       <%= form_with url: card_engagement_path(@card), method: :delete, data: { controller: "form" } do |form| %>
-        <%= form.label :engagement, value: "considering", class: "btn", aria: { label: "Move to Doing"} do %>
+        <%= form.label :engagement, value: "considering", class: "btn", aria: { label: "Move to Considering"} do %>
           <%= form.radio_button :engagement, "considering", checked: @card.considering?, class: "for-screen-reader", data: { action: "change->form#submit" } %>
           <span>Considering</span>
         <% end %>
       <% end %>
 
       <%= form_with url: card_engagement_path(@card), method: :post, data: { controller: "form" } do |form| %>
-        <%= form.label :engagement, value: "doing", class: "btn", aria: { label: "Move back to Considering"} do %>
+        <%= form.hidden_field :engagement, value: "on_deck" %>
+        <%= form.label :engagement, value: "on_deck", class: "btn", aria: { label: "Move to On Deck"} do %>
+          <%= form.radio_button :engagement, "on_deck", checked: @card.on_deck?, class: "for-screen-reader", data: { action: "change->form#submit" } %>
+          <span>On Deck</span>
+        <% end %>
+      <% end %>
+
+      <%= form_with url: card_engagement_path(@card), method: :post, data: { controller: "form" } do |form| %>
+        <%= form.hidden_field :engagement, value: "doing" %>
+        <%= form.label :engagement, value: "doing", class: "btn", aria: { label: "Move to Doing"} do %>
           <%= form.radio_button :engagement, "doing", checked: @card.doing?, class: "for-screen-reader", data: { action: "change->form#submit" } %>
           <span>Doing</span>
         <% end %>

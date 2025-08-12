@@ -10,6 +10,7 @@ class CardsController < ApplicationController
 
   def index
     @considering = page_and_filter_for @filter.with(engagement_status: "considering"), per_page: PAGE_SIZE
+    @on_deck = page_and_filter_for @filter.with(engagement_status: "on_deck"), per_page: PAGE_SIZE
     @doing = page_and_filter_for @filter.with(engagement_status: "doing"), per_page: PAGE_SIZE
     @closed = page_and_filter_for_closed_cards
   end

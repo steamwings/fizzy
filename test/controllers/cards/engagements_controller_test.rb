@@ -9,7 +9,16 @@ class Cards::EngagementsControllerTest < ActionDispatch::IntegrationTest
     card = cards(:text)
 
     assert_changes -> { card.reload.doing? }, from: false, to: true do
-      post card_engagement_path(card)
+      post card_engagement_path(card), params: { engagement: "doing" }
+      assert_card_container_rerendered(card)
+    end
+  end
+
+  test "create on_deck" do
+    card = cards(:text)
+
+    assert_changes -> { card.reload.on_deck? }, from: false, to: true do
+      post card_engagement_path(card), params: { engagement: "on_deck" }
       assert_card_container_rerendered(card)
     end
   end

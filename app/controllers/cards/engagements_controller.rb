@@ -2,7 +2,12 @@ class Cards::EngagementsController < ApplicationController
   include CardScoped
 
   def create
-    @card.engage
+    case params[:engagement]
+    when "doing"
+      @card.engage
+    when "on_deck"
+      @card.move_to_on_deck
+    end
     render_card_replacement
   end
 

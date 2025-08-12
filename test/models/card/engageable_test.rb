@@ -12,6 +12,9 @@ class Card::EngageableTest < ActiveSupport::TestCase
     assert_not cards(:logo).considering?
     assert cards(:text).considering?
 
+    assert_not cards(:logo).on_deck?
+    assert_not cards(:text).on_deck?
+
     assert_equal "doing", cards(:logo).engagement_status
     assert_equal "considering", cards(:text).engagement_status
   end
@@ -31,6 +34,7 @@ class Card::EngageableTest < ActiveSupport::TestCase
 
     assert_not cards(:text).considering?
     assert_not cards(:text).doing?
+    assert_not cards(:text).on_deck?
 
     cards(:text).engage
     assert_not cards(:text).reload.closed?
@@ -48,5 +52,9 @@ class Card::EngageableTest < ActiveSupport::TestCase
 
     assert_includes Card.considering, cards(:text)
     assert_not_includes Card.considering, cards(:logo)
+
+    cards(:text).move_to_on_deck
+    assert_includes Card.on_deck, cards(:text)
+    assert_not_includes Card.on_deck, cards(:logo)
   end
 end

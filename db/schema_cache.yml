@@ -382,6 +382,16 @@ columns:
     comment:
   - *5
   - *6
+  - !ruby/object:ActiveRecord::ConnectionAdapters::SQLite3::Column
+    auto_increment:
+    name: status
+    cast_type: *7
+    sql_type_metadata: *8
+    'null': false
+    default: doing
+    default_function:
+    collation:
+    comment:
   - *9
   card_goldnesses:
   - *22
@@ -1587,6 +1597,22 @@ indexes:
     nulls_not_distinct:
     comment:
     valid: true
+  - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
+    table: card_engagements
+    name: index_card_engagements_on_status
+    unique: false
+    columns:
+    - status
+    lengths: {}
+    orders: {}
+    opclasses: {}
+    where:
+    type:
+    using:
+    include:
+    nulls_not_distinct:
+    comment:
+    valid: true
   card_goldnesses:
   - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
     table: card_goldnesses
@@ -2703,4 +2729,4 @@ indexes:
     comment:
     valid: true
   workflows: []
-version: 20250806174718
+version: 20250812195130

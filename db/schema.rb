@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_08_06_174718) do
+ActiveRecord::Schema[8.1].define(version: 2025_08_12_195130) do
   create_table "accesses", force: :cascade do |t|
     t.datetime "accessed_at"
     t.integer "collection_id", null: false
@@ -107,8 +107,10 @@ ActiveRecord::Schema[8.1].define(version: 2025_08_06_174718) do
   create_table "card_engagements", force: :cascade do |t|
     t.integer "card_id"
     t.datetime "created_at", null: false
+    t.string "status", default: "doing", null: false
     t.datetime "updated_at", null: false
     t.index ["card_id"], name: "index_card_engagements_on_card_id"
+    t.index ["status"], name: "index_card_engagements_on_status"
   end
 
   create_table "card_goldnesses", force: :cascade do |t|

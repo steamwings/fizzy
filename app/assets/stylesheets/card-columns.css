@@ -7,7 +7,7 @@
   #main:has(.card-columns) {
     --cards-gap: min(2cqi, 1rem);
     --gradient-border: linear-gradient(to right,var(--color-canvas), var(--color-ink-lighter) 3%, var(--color-ink-lighter) 97%, var(--color-canvas));
-    --reserved-bubble-space: calc(var(--bubble-size) + var(--bubble-gap));
+    --reserved-bubble-space: calc(var(--bubble-size) / 2 + var(--bubble-gap));
     --bubble-gap: 0.5rem;
     --bubble-size: 4rem;
 
@@ -17,13 +17,13 @@
     @media (max-width: 639px) {
       --bubble-gap: -0.5rem;
       --bubble-size: 3rem;
-      --reserved-bubble-space: calc(var(--bubble-size) / 2 + var(--bubble-gap));
     }
   }
 
   .card-columns {
     margin: auto;
     max-inline-size: 100%;
+    padding-inline: var(--reserved-bubble-space);
     position: relative;
 
     &:before {
@@ -36,7 +36,7 @@
 
     @media (min-width: 640px) {
       display: grid;
-      grid-template-columns: repeat(2, 50%);
+      grid-template-columns: repeat(3, 33%);
     }
   }
 
@@ -59,7 +59,7 @@
 
     @media (max-width: 639px) {
       padding-block-end: calc(var(--cards-gap) * 2);
-      padding-inline-start: var(--reserved-bubble-space);
+      padding-inline-start: var(--cards-gap);
     }
 
     .card {
@@ -155,7 +155,7 @@
 
   .cards--considering {
     @media (min-width: 640px) {
-      padding-inline: var(--reserved-bubble-space) var(--cards-gap);
+      padding-inline: var(--cards-gap);
 
       &:after {
         background: linear-gradient(var(--color-canvas), var(--color-ink-lighter) 1%, var(--color-ink-lighter) 99%, var(--color-canvas));
@@ -222,12 +222,42 @@
     }
   }
 
+  /* On Deck
+  /* ------------------------------------------------------------------------ */
+
+  .cards--on-deck {
+    @media (min-width: 640px) {
+      padding-inline: var(--cards-gap);
+
+      &:after {
+        background: linear-gradient(var(--color-canvas), var(--color-ink-lighter) 1%, var(--color-ink-lighter) 99%, var(--color-canvas));
+        block-size: calc(100% + 1.2em);
+        content: "";
+        display: block;
+        inline-size: 1px;
+        inset: -0.6em 0 -0.6em 100%;
+        position: absolute;
+        z-index: 3;
+      }
+    }
+
+    @media (max-width: 639px) {
+      &::before {
+        background: var(--gradient-border);
+        block-size: 1px;
+        content: "";
+        inset: 0 0 auto;
+        position: absolute;
+      }
+    }
+  }
+
   /* Doing
   /* ------------------------------------------------------------------------ */
 
   .cards--doing {
     @media (min-width: 640px) {
-      padding-inline: var(--cards-gap) var(--reserved-bubble-space);
+      padding-inline: var(--cards-gap);
     }
 
     @media (max-width: 639px) {

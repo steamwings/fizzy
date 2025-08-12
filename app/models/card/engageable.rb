@@ -5,18 +5,24 @@ module Card::Engageable
     has_one :engagement, dependent: :destroy, class_name: "Card::Engagement"
 
     scope :considering, -> { published_or_drafted_by(Current.user).open.where.missing(:engagement) }
-    scope :doing,       -> { published.open.joins(:engagement) }
+    scope :on_deck,     -> { published.open.joins(:engagement).where(card_engagements: { status: "on_deck" }) }
+    scope :doing,       -> { published.open.joins(:engagement).where(card_engagements: { status: "doing" }) }
 
     scope :by_engagement_status, ->(status) do
       case status.to_s
       when "considering" then considering.with_golden_first
+      when "on_deck"     then on_deck.with_golden_first
       when "doing"       then doing.with_golden_first
       end
     end
   end
 
   def doing?
-    open? && published? && engagement.present?
+    open? && published? && engagement&.status == "doing"
+  end
+
+  def on_deck?
+    open? && published? && engagement&.status == "on_deck"
   end
 
   def considering?
@@ -26,6 +32,8 @@ module Card::Engageable
   def engagement_status
     if doing?
       "doing"
+    elsif on_deck?
+      "on_deck"
     elsif considering?
       "considering"
     end
@@ -35,7 +43,20 @@ module Card::Engageable
     unless doing?
       transaction do
         reopen
-        create_engagement!
+        create_engagement!(status: "doing")
+      end
+    end
+  end
+
+  def move_to_on_deck
+    unless on_deck?
+      transaction do
+        reopen
+        if engagement.present?
+          engagement.update!(status: "on_deck")
+        else
+          create_engagement!(status: "on_deck")
+        end
       end
     end
   end
