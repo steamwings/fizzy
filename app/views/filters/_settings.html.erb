@@ -1,9 +1,11 @@
-<aside id="filter-settings" class="filters flex align-center gap-half justify-center center margin-block-end">
-  <div class="flex-inline center align-center gap-half">
-    <%= render "filters/settings/terms", user_filtering: user_filtering %>
-    <%= render "filters/settings/controls", user_filtering: user_filtering %>
+<% cache user_filtering do %>
+  <aside id="filter-settings" class="filters flex align-center gap-half justify-center center margin-block-end">
+    <div class="flex-inline center align-center gap-half">
+      <%= render "filters/settings/terms", user_filtering: user_filtering %>
+      <%= render "filters/settings/controls", user_filtering: user_filtering %>
 
-    <%= render "filters/settings/toggle", user_filtering: user_filtering %>
-    <%= render "filters/settings/manage", user_filtering: user_filtering %>
-  </div>
-</aside>
+      <%= render "filters/settings/toggle", user_filtering: user_filtering %>
+      <%= render "filters/settings/manage", user_filtering: user_filtering %>
+    </div>
+  </aside>
+<% end %>
