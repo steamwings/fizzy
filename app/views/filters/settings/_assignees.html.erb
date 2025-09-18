@@ -42,7 +42,8 @@
             <% end %>
           <% end %>
         </li>
-        <% User.active.order(:name).each do |user| %>
+
+        <% user_filtering.users.each do |user| %>
           <li class="popup__item" data-filter-target="item" data-navigable-list-target="item">
             <%= form_with url: cards_path, method: :get, class: "full-width", data: { controller: "form" } do |form| %>
               <% filter.as_params.except(:assignee_ids, :assignment_status).each do |key, value| %>
