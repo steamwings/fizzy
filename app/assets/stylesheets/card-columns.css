@@ -28,6 +28,10 @@
     margin-block-start: var(--cards-gap);
     position: relative;
 
+    &:has(.card-columns__left .cards:not(.is-collapsed), .card-columns__right .cards:not(.is-collapsed)) {
+      grid-template-columns: auto auto auto;
+    }
+
     &:has(.cards) {
       min-block-size: 20lh;
     }
