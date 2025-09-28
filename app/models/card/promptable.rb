@@ -19,11 +19,8 @@ module Card::Promptable
       * Id: #{id}
       * Created by: #{creator.name}}
       * Assigned to: #{assignees.map(&:name).join(", ")}}
-      * Workflow stage: #{stage&.name}
+      * Column: #{column_prompt_label}
       * Created at: #{created_at}}
-      * Closed: #{closed?}
-      * Closed by: #{closed_by&.name}
-      * Closed at: #{closed_at}
       * Collection id: #{collection_id}
       * Collection name: #{collection.name}
       * Number of comments: #{comments.count}
@@ -32,4 +29,19 @@ module Card::Promptable
       END OF CARD #{id}
     PROMPT
   end
+
+  private
+    def column_prompt_label
+      if open?
+        if postponed?
+          "Not now"
+        elsif triaged?
+          "#{column&.name}"
+        else
+          "The stream"
+        end
+      else
+        "Closed (by #{closed_by&.name} at #{closed_at})"
+      end
+    end
 end
