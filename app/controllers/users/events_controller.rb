@@ -6,6 +6,8 @@ class Users::EventsController < ApplicationController
   def show
     @filter = Current.user.filters.new(creator_ids: [ @user.id ])
     @day_timeline = Current.user.timeline_for(day_param, filter: @filter)
+
+    fresh_when @day_timeline
   end
 
   private
