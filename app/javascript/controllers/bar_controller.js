@@ -65,8 +65,8 @@ export default class extends Controller {
 
     const autofocusElement = element.querySelector("[autofocus]")
 
-    await nextFrame()
     autofocusElement?.focus()
+    await nextFrame()
     autofocusElement?.select()
   }
 
