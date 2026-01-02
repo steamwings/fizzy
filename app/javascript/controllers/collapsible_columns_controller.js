@@ -48,7 +48,7 @@ export default class extends Controller {
   }
 
   focusOnColumn({ target }) {
-    if (this.#isCollapsed(target)) {
+    if (this.#isDesktop && this.#isCollapsed(target)) {
       this.#collapseAllExcept(target)
       this.#expand(target)
     }
@@ -97,7 +97,7 @@ export default class extends Controller {
   #collapse(column) {
     const key = this.#localStorageKeyFor(column)
 
-    this.#buttonFor(column).setAttribute("aria-expanded", "false")
+    this.#buttonFor(column)?.setAttribute("aria-expanded", "false")
     column.classList.remove(this.expandedClass)
     column.classList.add(this.collapsedClass)
     localStorage.removeItem(key)
@@ -106,7 +106,7 @@ export default class extends Controller {
   #expand(column) {
     const key = this.#localStorageKeyFor(column)
 
-    this.#buttonFor(column).setAttribute("aria-expanded", "true")
+    this.#buttonFor(column)?.setAttribute("aria-expanded", "true")
     column.classList.remove(this.collapsedClass)
     column.classList.add(this.expandedClass)
     localStorage.setItem(key, true)
@@ -170,8 +170,10 @@ export default class extends Controller {
   }
 
   #handleMobileMode() {
-    this.columnTargets.forEach(column => this.#collapse(column))
     this.#maybeButton.removeAttribute("disabled")
+    this.columnTargets.forEach(column => {
+      this.#collapse(column)
+    })
   }
 
   get #maybeButton() {
