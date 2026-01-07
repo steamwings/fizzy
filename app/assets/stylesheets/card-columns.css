@@ -499,7 +499,7 @@
   /* Override card styles within columns
   /* ------------------------------------------------------------------------ */
 
-  .body--boards {
+  body:has(.cards) {
     .card {
       --block-space: 1em;
       --block-space-half: 0.5em;
