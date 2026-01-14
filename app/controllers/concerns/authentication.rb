@@ -9,7 +9,7 @@ module Authentication
 
     etag { Current.identity.id if authenticated? }
 
-    include Authentication::ViaMagicLink, LoginHelper
+    include Authentication::ViaMagicLink, Authentication::ViaOidc, LoginHelper
   end
 
   class_methods do
