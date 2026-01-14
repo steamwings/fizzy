@@ -39,6 +39,9 @@ module SessionTestHelper
     OmniAuth.config.mock_auth[:oidc] = auth_hash
 
     untenanted do
+      get new_session_path
+      assert_response :success, "Can access new session page"
+
       post "/auth/oidc/callback", env: { "omniauth.auth" => auth_hash }
     end
 
