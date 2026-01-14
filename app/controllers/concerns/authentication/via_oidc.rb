@@ -1,15 +1,15 @@
 module Authentication::ViaOidc
   extend ActiveSupport::Concern
 
-  class_methods do
-    def oidc_enabled?
-      ENV["OIDC_ISSUER"].present?
-    end
+  private
+    def authenticate_with_oidc(auth_hash)
+      identity = Identity.find_or_create_from_oidc(auth_hash)
 
-    def oidc_required?
-      ENV["OIDC_REQUIRED"] == "true"
+      if identity.present?
+        start_new_session_for identity
+        redirect_to after_authentication_url
+      else
+        authentication_failed(message: "Something went wrong using your identity provider.")
+      end
     end
-  end
-
-  delegate :oidc_enabled?, :oidc_required?, to: :class
 end

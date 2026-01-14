@@ -13,8 +13,8 @@ class OidcAuthenticationFlowTest < ActionDispatch::IntegrationTest
   test "complete OIDC sign in flow for new user" do
     auth_hash = OmniAuth::AuthHash.new(
       provider: "oidc",
-      uid: "flow-123",
-      info: { email: "flow@example.com", name: "Flow User" },
+      uid: "cory-123",
+      info: { email: "cory@73signals.com", name: "Cory" },
       extra: { raw_info: { email_verified: true } }
     )
 
@@ -33,11 +33,10 @@ class OidcAuthenticationFlowTest < ActionDispatch::IntegrationTest
       assert cookies[:session_token].present?
 
       # Verify identity was created
-      identity = Identity.find_by(email_address: "flow@example.com")
+      identity = Identity.find_by(email_address: "cory@73signals.com")
       assert identity.present?
-      assert_equal "flow-123", identity.oidc_subject
+      assert_equal "cory-123", identity.oidc_subject
       assert_equal "oidc", identity.oidc_provider
-      assert identity.oidc_email_verified
     end
   end
 
@@ -70,10 +69,11 @@ class OidcAuthenticationFlowTest < ActionDispatch::IntegrationTest
   end
 
   test "OIDC user can sign in multiple times" do
+    existing = identities(:mike)
     auth_hash = OmniAuth::AuthHash.new(
       provider: "oidc",
       uid: "repeat-user",
-      info: { email: "repeat@example.com", name: "Repeat User" },
+      info: { email: existing.email_address, name: "Mike" },
       extra: { raw_info: { email_verified: true } }
     )
 

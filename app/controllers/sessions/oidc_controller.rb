@@ -12,43 +12,16 @@ class Sessions::OidcController < ApplicationController
     if auth_hash.present?
       authenticate_with_oidc(auth_hash)
     else
-      authentication_failed("Authentication data not found")
+      Rails.logger.debug "OIDC data not found"
+      authentication_failed(message: "OIDC authentication failed.")
     end
   rescue => e
     Rails.error.report(e, severity: :error)
-    authentication_failed("Authentication failed")
+    authentication_failed(message: "Error during OIDC authentication.")
   end
 
   def failure
     error_type = params[:message] || "unknown_error"
-    authentication_failed("OIDC authentication failed: #{error_type}")
+    authentication_failed(message: "OIDC authentication failed: #{error_type}")
   end
-
-  private
-    def authenticate_with_oidc(auth_hash)
-      identity = Identity.find_or_create_from_oidc(auth_hash)
-
-      if identity.persisted?
-        start_new_session_for identity
-        redirect_to after_authentication_url
-      else
-        authentication_failed("Failed to create or find identity")
-      end
-    end
-
-    def authentication_failed(message)
-      Rails.logger.warn "OIDC authentication failed: #{message}"
-
-      respond_to do |format|
-        format.html { redirect_to new_session_path, alert: "Authentication failed. Please try again." }
-        format.json { render json: { message: message }, status: :unauthorized }
-      end
-    end
-
-    def rate_limit_exceeded
-      respond_to do |format|
-        format.html { redirect_to new_session_path, alert: "Too many attempts. Try again in 15 minutes." }
-        format.json { render json: { message: "Rate limit exceeded" }, status: :too_many_requests }
-      end
-    end
 end

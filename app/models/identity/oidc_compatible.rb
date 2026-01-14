@@ -8,43 +8,35 @@ module Identity::OidcCompatible
       email = auth_hash.info.email
       email_verified = auth_hash.extra.raw_info.email_verified || false
 
-      # Validate required fields
-      return new unless subject.present? && email.present?
+      return nil unless subject.present? && email.present?
 
       # First, try to find existing identity by OIDC subject
       identity = find_by(oidc_subject: subject, oidc_provider: provider)
 
       if identity
-        # Update email if verified and changed
         if email_verified && identity.email_address != email
-          identity.update(email_address: email, oidc_email_verified: true)
+          identity.update(email_address: email)
         end
         return identity
       end
 
+      # Next, try to find by email and link OIDC credentials
       identity = find_by(email_address: email)
 
       if identity
         identity.update(
           oidc_subject: subject,
-          oidc_provider: provider,
-          oidc_email_verified: email_verified
+          oidc_provider: provider
         )
         return identity
       end
 
+      # Create new identity with OIDC
       create(
         email_address: email,
         oidc_subject: subject,
-        oidc_provider: provider,
-        oidc_email_verified: email_verified
+        oidc_provider: provider
       )
-    rescue ActiveRecord::RecordNotUnique
-      retry
     end
-  end
-
-  def authenticated_via_oidc?
-    oidc_subject.present?
   end
 end

@@ -314,7 +314,6 @@ ActiveRecord::Schema[8.2].define(version: 2026_01_11_000000) do
   create_table "identities", id: :uuid, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "email_address", limit: 255, null: false
-    t.boolean "oidc_email_verified", default: false
     t.string "oidc_provider", limit: 255
     t.string "oidc_subject", limit: 255
     t.boolean "staff", default: false, null: false

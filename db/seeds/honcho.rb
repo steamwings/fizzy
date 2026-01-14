@@ -4,12 +4,11 @@ david = find_or_create_user "David Heinemeier Hansson", "david@example.com"
 jason = find_or_create_user "Jason Fried", "jason@example.com"
 jz    = find_or_create_user "Jason Zimdars", "jz@example.com"
 kevin = find_or_create_user "Kevin McConnell", "kevin@example.com"
-jorge = find_or_create_user "Jorge Manrubia", "jorge@example.com"
 mike  = find_or_create_user "Mike Dalessio", "mike@example.com"
 
 login_as david
 
-authors = [ david, jason, jz, kevin, jorge, mike ]
+authors = [ david, jason, jz, kevin, mike ]
 
 card_titles = [
   "Implement authentication",

@@ -15,15 +15,5 @@ kevin:
 
 mike:
   email_address: mike@37signals.com
-
-oidc_user:
-  email_address: oidc@example.com
-  oidc_subject: "google-oauth2|123456789"
+  oidc_subject: "google-oauth2|mike123"
   oidc_provider: "oidc"
-  oidc_email_verified: true
-
-oidc_user_unverified:
-  email_address: oidc_unverified@example.com
-  oidc_subject: "google-oauth2|987654321"
-  oidc_provider: "oidc"
-  oidc_email_verified: false

@@ -30,7 +30,6 @@ class Sessions::OidcControllerTest < ActionDispatch::IntegrationTest
       assert identity.present?
       assert_equal "oidc-123", identity.oidc_subject
       assert_equal "oidc", identity.oidc_provider
-      assert identity.oidc_email_verified
     end
   end
 
